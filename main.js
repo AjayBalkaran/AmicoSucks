@@ -22,7 +22,7 @@ const inputElements = {
     return discount;
   }
   
-  // Function to Calculate Discount after Removing a Set Price
+  // Function to Calculate Discount from static discount after Removing a Set Price
   function removePrice() {
     const list = inputElements.list.value;
     const net = inputElements.net.value;
@@ -31,6 +31,22 @@ const inputElements = {
     const newNet = net - removal;
   
     return calculateDiscount(newNet, list);
+  }
+  
+  // Function to Calculate Discount from multiple discounts after Removing a Set Price
+  function removePriceMultipal() {
+    const list = inputElements.list.value;
+    const net = inputElements.net.value;
+    const removal = inputElements.removal.value;
+    const overallDiscount = inputElements.overallDiscount.value / 100;
+    const valveDiscount = inputElements.valveDiscount.value / 100;
+    const lineItemCondition = inputElements.lineItemCondition.value;
+  
+    const newNet = net - (lineItemCondition / valveDiscount) * (1 - valveDiscount);
+    const newList = newNet / (1 - overallDiscount);
+    const desiredPrice = newNet - removal;
+  
+    return parseFloat(100 - calculateDiscount(desiredPrice, newList)).toFixed(3);
   }
   
   // Testing Function
@@ -46,6 +62,12 @@ const inputElements = {
       inputElements.lineItemCondition.value = 570.35;
       inputElements.overallDiscount.value = 60;
       inputElements.removal.value = 155.03;
+  
+      if (removePriceMultipal() === '65.723') {
+        console.log('Success');
+      } else {
+        console.log('Something went wrong');
+      }
     } else if (scenario === 4) {
       // Testing the removePrice() function
       inputElements.list.value = 100;
