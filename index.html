@@ -1,51 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>PIPELINE CHEATSHEET</title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
-        <section id="title">
-            <h1>PIPELINE MATH CHEATSHEET</h1>
-        </section>
-        
-        <section id="constInputs">
-            <label for="listInput">LIST:</label>
-            <input type="number" id="listInput">
-            <label for="netInput">NET:</label>
-            <input type="number" id="netInput">
-        </section> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Pipeline Cheat Sheet</title>
+</head>
+  <body>
+      <header>
+          <h1 class="page-title">Pipeline Math Cheat Sheet</h1>
+      </header>
 
-        <section id="removalInputs">
-            <h2 class="removalInputsTitle">Remove price</h2>
-            <button id="discoutButton" onclick="valveDiscountToggle(this,false)">Without Valve Discount</button>
-            
-            </section id="removalInputsFlatDiscount">
-                <!-- Using a set sum when only a flat discount is used -->
-                <label for="removalPrice" id="removalPriceLabel">Price to remove:</label>
-                <button id="inputToggle" onclick="dollarPercentageToggle(this, false)">$</button>
-                <input type="number" id="removalPrice">
-            </section>
+      <main>
+          <section class="option-bar">
+              <button class="tab-button active">Remove A Set Amount</button>
+              <button class="tab-button">Flip to Buy/Sell</button>
+              <button class="tab-button">Tab 3</button>
+          </section>
 
-            <section id="removalInputsMultipleDiscount" class="remove">
-                <!-- Using a set sum when multiple discounts are applied -->
-                <label for="overallDiscount">Overall Discount:</label>
-                <input type="number" id="overallDiscount">
+          <section class="inputs">
+              <h2>Input Section</h2>
+              <section id="inputSectionOne">
+                <label for="listInput">List:</label>
+                <input type="number" id="listInput">
+                <label for="netInput">NET:</label>
+                <input type="number" id="netInput">
+              </section>
+              <br>
+              <section id="sectionTwo">
+                <label for="removalInput">Price to remove:</label>
+                <input type="number" id="removalInput">
+              </section>
+              <br>
+              <section id="sectionThree">
                 <label for="valveDiscount">Valve Discount:</label>
                 <input type="number" id="valveDiscount">
-                <label for="valveConditionValue">Line Item Condition Value:</label>
-                <input type="number" id="valveConditionValue">
+                <label for="lineItemCondition">Line Item Condition:</label>
+                <input type="number" id="lineItemCondition">
+                <label for="overallDiscount">Overall Discount:</label>
+                <input type="number" id="overallDiscount">
+              </section>
             </section>
-        </section>
 
-        <section id="resultOutputs">
-            <button id="resultbutton">Calculate</button>
-            <p id="message"></p>
-        </section>
-
-        <!--External JavaScript refrence file-->
-        <script src="app.js"></script>
-    </body>
+          <section class="calculation">
+              <h2>Calculation Section</h2>
+              <button id="calculateButton" onclick="displyResults('this is a test')">Calculate</button>
+              <p id="result">Results will be displayed here.</p>
+          </section>
+          <!-- Linked Javascript file -->
+          <script src="main.js"></script>
+      </main>
+  </body>
 </html>
