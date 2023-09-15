@@ -22,6 +22,17 @@ const inputElements = {
     return discount;
   }
   
+  // Function to Calculate Discount after Removing a Set Price
+  function removePrice() {
+    const list = inputElements.list.value;
+    const net = inputElements.net.value;
+    const removal = inputElements.removal.value;
+  
+    const newNet = net - removal;
+  
+    return calculateDiscount(newNet, list);
+  }
+  
   // Testing Function
   function testScenario(scenario) {
     if (scenario === 1) {
@@ -35,6 +46,12 @@ const inputElements = {
       inputElements.lineItemCondition.value = 570.35;
       inputElements.overallDiscount.value = 60;
       inputElements.removal.value = 155.03;
+    } else if (scenario === 4) {
+      // Testing the removePrice() function
+      inputElements.list.value = 100;
+      inputElements.net.value = 55;
+      inputElements.removal.value = 5;
+      resultElement.textContent = `To remove $${inputElements.removal.value}, we would need to change the discount to ${removePrice()}`;
     }
   }
   
