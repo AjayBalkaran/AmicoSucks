@@ -1,0 +1,66 @@
+:root {
+  --primary-color: #333; /* Dark Gray */
+  --secondary-color: #666; /* Slightly Darker Gray */
+  --accent-color: #0077b6; /* Teal Blue */
+  --text-color: #fff; /* White */
+  --light-gray: #ccc; /* Light Gray */
+  --light-blue: #66a3d2; /* Light Blue */
+  --dark-blue: #074663; /* Dark Blue */
+  --dark-gray: #222; /* Even Darker Gray */
+}
+
+/* Header and Navigation */
+header {
+  background-color: var(--dark-blue); /* Dark Blue for header background */
+  color: var(--text-color);
+  padding: 10px 0;
+}
+
+nav {
+  display: flex; /* Make the navigation items horizontal */
+  justify-content: space-around; /* Center the navigation items */
+  align-items: center; /* Vertically align items */
+}
+
+.nav-link {
+  color: var(--text-color);
+  text-decoration: none; /* Remove underline */
+  padding: 10px 20px; /* Add padding around each link */
+  border-radius: 5px;
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.nav-link:hover {
+  background-color: var(--secondary-color); /* Change background color on hover */
+}
+
+/* Main Content */
+body {
+  padding: 20px;
+  background-color: var(--primary-color); /* Dark Gray background */
+  color: var(--text-color);
+}
+
+/* Buttons */
+.cta-button,
+.positive-button {
+  background-color: var(--accent-color); /* Teal Blue for buttons */
+  color: var(--text-color);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+/* Form Styles */
+form {
+  margin-top: 20px;
+}
+
+/* Footer */
+footer {
+  background-color: var(--dark-gray); /* Even Darker Gray for footer background */
+  color: var(--text-color);
+  text-align: center;
+  padding: 10px;
+}
