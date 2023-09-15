@@ -11,9 +11,15 @@
 
 /* Header and Navigation */
 header {
-  background-color: var(--dark-blue); /* Dark Blue for header background */
   color: var(--text-color);
   padding: 10px 0;
+  text-align: center; /* Center-align the text */
+}
+
+/* Add a bottom border with the same color as the background */
+header h1 {
+  border-bottom: 3px solid var(--accent-color); /* Underline with the accent color */
+  display: inline-block; /* Keep the border only under the text width */
 }
 
 nav {
@@ -31,7 +37,7 @@ nav {
 }
 
 .nav-link:hover {
-  background-color: var(--secondary-color); /* Change background color on hover */
+  background-color: var(--secondary-color); /* Slightly Darker Gray for hover */
 }
 
 /* Main Content */
@@ -63,4 +69,54 @@ footer {
   color: var(--text-color);
   text-align: center;
   padding: 10px;
+}
+
+/* ******************* */
+
+/* Style for the option bar container */
+.option-bar {
+  display: flex;
+  background-color: var(--primary-color); /* Dark Gray for option bar background */
+  padding: 10px;
+}
+
+/* Style for the tab buttons */
+.tab-button {
+  background-color: var(--secondary-color); /* Slightly Darker Gray for tab buttons */
+  border: none;
+  color: var(--text-color);
+  padding: 10px 20px;
+  cursor: pointer;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  margin-right: -1px;
+  transition: background-color 0.3s ease;
+}
+
+/* Style for the active tab button */
+.tab-button.active {
+  background-color: var(--accent-color); /* Teal Blue for active tab button */
+  color: var(--text-color);
+}
+
+/* Add a hover effect */
+.tab-button:hover {
+  background-color: var(--dark-blue); /* Dark Blue for hover effect */
+}
+
+
+/* Input Styles */
+input[type="number"] {
+  background-color: var(--accent-color); /* Light Blue for input background */
+  color: var(--text-color);
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  margin: 5px 0;
+}
+
+/* Update the color for focused input elements (when clicked) */
+input[type="number"]:focus {
+  background-color: var(--light-blue); /* Dark Blue when focused */
+  outline: none; /* Remove default focus outline */
 }
