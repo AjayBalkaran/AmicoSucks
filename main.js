@@ -98,6 +98,38 @@ function isFieldEmpty(inputField) {
   }
 }
 
+//function that sets the active state to the clicked button.
+function handleButtonClick(button) {
+  // Get all the buttons within the option-bar section
+  const optionButtons = document.querySelectorAll('.option-bar .tab-button');
+
+  // Remove the 'active' class from all buttons
+  optionButtons.forEach(btn => {
+      btn.classList.remove('active');
+  });
+
+  // Add the 'active' class to the clicked button
+  button.classList.add('active');
+}
+
+// Function that determins what tab is active
+function whatIsActive () {
+  // Get all the buttons within the option-bar section
+  const optionButtons = document.querySelectorAll('.option-bar .tab-button');
+
+  // Initialize a variable to store the active button (if found)
+  let activeButton = null;
+
+  // Loop through the buttons and check for the 'active' class
+  optionButtons.forEach(button => {
+    if (button.classList.contains('active')) {
+        activeButton = button; // Store the active button
+    }
+  });
+  return activeButton;
+};
+
+
 // Results Function
 function calculateResults() {
   // if statement checks if all necessary fields have been inputted
