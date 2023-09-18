@@ -115,3 +115,40 @@ function calculateResults() {
     displayResults("Please enter values in all required fields.");
   }
 }
+  
+// Testing Function
+function testScenario(scenario) {
+  if (scenario === 1) {
+    console.log(inputElements.list.value); // Testing if the document value is being taken.
+  } else if (scenario === 2) {
+    console.log(resultElement.textContent); // Testing if the result text is being targeted.
+  } else if (scenario === 3) {
+    // Testing the results of a multiple discount
+    inputElements.list.value = 3746;
+    inputElements.net.value = 1550.25;
+    inputElements.valveDiscount.value = 55;
+    inputElements.lineItemCondition.value = 570.35;
+    inputElements.overallDiscount.value = 60;
+    inputElements.removal.value = 155.03;
+    calculateResults()
+    if (answer === '65.723') {
+      console.log('This test was successful');
+    } else {
+      console.log('Something went wrong');
+    }
+  } else if (scenario === 4) {
+    // Testing the results of a flat discount
+    inputElements.list.value = 100;
+    inputElements.net.value = 55;
+    inputElements.removal.value = 5;
+    inputElements.valveDiscount.value = null;
+    inputElements.lineItemCondition.value = null;
+    inputElements.overallDiscount.value = null;
+    calculateResults()
+    if (answer === '50') {
+      console.log('This test was successful');
+    } else {
+      console.log(`Something went wrong we expected 50 but got ${answer}`);
+    }
+  };
+};
