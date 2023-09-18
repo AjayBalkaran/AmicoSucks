@@ -15,20 +15,20 @@ let answer; // This will be used to store the new discount value
 const resultsArr = [
   () => {
     if (typeof answer !== 'undefined') {
-      return `This is the result for a single discount: ${answer}`;
+      return `Inorder to remove $${inputElements.removal.value}, the discout would need to be changed to ${answer}%`;
     } else {
       return "Answer is not defined.";
     }
   },
   () => {
     if (typeof answer !== 'undefined') {
-      return `This is the result for multiple discounts: ${answer}`;
+      return `Inorder to remove $${inputElements.removal.value}, the discout would need to be changed to ${answer} / ${inputElements.valveDiscount.value}%`;
     } else {
       return "Answer is not defined.";
     }
-  },
-  "THIS IS JUST A TEST RESULT"
+  }
 ];
+
 
 // Function to Display Results
 function displayResults(text) {
