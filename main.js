@@ -98,19 +98,6 @@ function isFieldEmpty(inputField) {
   }
 }
 
-//function that sets the active state to the clicked button.
-function handleButtonClick(button) {
-  // Get all the buttons within the option-bar section
-  const optionButtons = document.querySelectorAll('.option-bar .tab-button');
-
-  // Remove the 'active' class from all buttons
-  optionButtons.forEach(btn => {
-      btn.classList.remove('active');
-  });
-
-  // Add the 'active' class to the clicked button
-  button.classList.add('active');
-}
 
 // Function that determins what tab is active
 function whatIsActive () {
@@ -128,6 +115,39 @@ function whatIsActive () {
   });
   return activeButton;
 };
+
+
+//function that sets the active state to the clicked button.
+function handleButtonClick(button) {
+  // Get all the buttons within the option-bar section
+  const optionButtons = document.querySelectorAll('.option-bar .tab-button');
+
+  // Remove the 'active' class from all buttons
+  optionButtons.forEach(btn => {
+      btn.classList.remove('active');
+  });
+
+  // Add the 'active' class to the clicked button
+  button.classList.add('active');
+
+  // Array of element names to which you want to add the .notactive class
+  const elementsToAddClass = ['overallDiscount', 'valveDiscount', 'lineItemCondition'];
+
+  if (button.textContent === "Remove Amount From Flat Discout"){
+    console.log("Flat Discount is active");
+    
+    // Loop through the elementsToAddClass array and add the .notactive class to the corresponding input elements
+    for (const elementName of elementsToAddClass) {
+      const inputElement = inputElements[elementName];
+      if (inputElement) {
+        inputElement.classList.add('notactive');
+      }
+    }
+  } else if (button.textContent === "Remove Amount From Dual Discout"){
+    console.log('Dual diacount is active');
+
+  }
+}
 
 
 // Results Function
