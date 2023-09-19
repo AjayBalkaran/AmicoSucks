@@ -117,6 +117,21 @@ function whatIsActive () {
 };
 
 
+// Function that hides or unhides elements by ID
+function hideToggleElement(idName) {
+  let elementToHideToggle = document.getElementById(idName);
+  if (elementToHideToggle) { // Check if the element exists
+    if (elementToHideToggle.classList.contains("hide")) { // checks if element is already hidden
+      elementToHideToggle.classList.remove("hide");  
+    } else { // if element is not hidden then hide
+      elementToHideToggle.classList.add("hide");
+    };
+  } else {
+    console.log(`Element with ID "${idName}" not found.`);
+  }
+}
+
+
 //function that sets the active state to the clicked button.
 function handleButtonClick(button) {
   // Get all the buttons within the option-bar section
@@ -130,23 +145,32 @@ function handleButtonClick(button) {
   // Add the 'active' class to the clicked button
   button.classList.add('active');
 
-  // Array of element names to which you want to add the .notactive class
-  const elementsToAddClass = ['overallDiscount', 'valveDiscount', 'lineItemCondition'];
+  //Call the hideToggleElement() function to hide unwanted elements
+  if (button.textContent === "Remove Amount From Flat Discout" || button.textContent === "Remove Amount From Dual Discout") {
+    hideToggleElement("multipalDiscoutSection");
+  } else if (button.textContent === "Removal amount as $") {
+   console.log("a removal input change has been requested")
 
-  if (button.textContent === "Remove Amount From Flat Discout"){
-    console.log("Flat Discount is active");
+  };
+  
+  // *********Code is no longer needed at this point *********************
+  // // Array of element names to which you want to add the .notactive class
+  // const elementsToAddClass = ['overallDiscount', 'valveDiscount', 'lineItemCondition'];
+
+  // if (button.textContent === "Remove Amount From Flat Discout"){
+  //   console.log("Flat Discount is active");
     
-    // Loop through the elementsToAddClass array and add the .notactive class to the corresponding input elements
-    for (const elementName of elementsToAddClass) {
-      const inputElement = inputElements[elementName];
-      if (inputElement) {
-        inputElement.classList.add('notactive');
-      }
-    }
-  } else if (button.textContent === "Remove Amount From Dual Discout"){
-    console.log('Dual diacount is active');
-
-  }
+  //   // Loop through the elementsToAddClass array and add the .notactive class to the corresponding input elements
+  //   for (const elementName of elementsToAddClass) {
+  //     const inputElement = inputElements[elementName];
+  //     if (inputElement) {
+  //       inputElement.classList.add('hide');
+  //     }
+  //   }
+  // } else if (button.textContent === "Remove Amount From Dual Discout"){
+  //   console.log('Dual diacount is active');
+  // }
+  //********************************************************************
 }
 
 
