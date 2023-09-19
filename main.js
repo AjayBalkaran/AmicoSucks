@@ -194,37 +194,48 @@ function calculateResults() {
   
 // Testing Function
 function testScenario(scenario) {
-  if (scenario === 1) {
-    console.log(inputElements.list.value); // Testing if the document value is being taken.
-  } else if (scenario === 2) {
-    console.log(resultElement.textContent); // Testing if the result text is being targeted.
-  } else if (scenario === 3) {
-    // Testing the results of a multiple discount
-    inputElements.list.value = 3746;
-    inputElements.net.value = 1550.25;
-    inputElements.valveDiscount.value = 55;
-    inputElements.lineItemCondition.value = 570.35;
-    inputElements.overallDiscount.value = 60;
-    inputElements.removal.value = 155.03;
-    calculateResults()
-    if (answer === '65.723') {
-      console.log('This test was successful');
-    } else {
-      console.log('Something went wrong');
-    }
-  } else if (scenario === 4) {
-    // Testing the results of a flat discount
-    inputElements.list.value = 100;
-    inputElements.net.value = 55;
-    inputElements.removal.value = 5;
-    inputElements.valveDiscount.value = null;
-    inputElements.lineItemCondition.value = null;
-    inputElements.overallDiscount.value = null;
-    calculateResults()
-    if (answer === '50') {
-      console.log('This test was successful');
-    } else {
-      console.log(`Something went wrong we expected 50 but got ${answer}`);
-    }
+  //defining a variable for switch statment
+  let test = scenario
+
+  //switch statment to perform diffrent test based on the scenario given
+  switch (test) {
+    case "isListValue" :
+      // Testing what the list value is.
+      console.log(`The current list Value is $${inputElements.list.value}`); 
+      break;
+    case "isNetValue" :
+      // Testing what the Net value is.
+      console.log(`The current Net Value is $${inputElements.Net.value}`); 
+      break;
+    case "isMultipleDiscoutResult":
+      //Testing if the expected results vs actual results are the same given predetermined sanario for multipal discounts.
+      inputElements.list.value = 3746;
+      inputElements.net.value = 1550.25;
+      inputElements.valveDiscount.value = 55;
+      inputElements.lineItemCondition.value = 570.35;
+      inputElements.overallDiscount.value = 60;
+      inputElements.removal.value = 155.03;
+      calculateResults()
+      if (answer === '65.723') {
+        console.log('This test was successful');
+      } else {
+        console.log('Something went wrong');
+      };  
+      break;
+    case "isFlatDiscountResult":
+      //Testing if the expected results vs actual results are the same given predetermined sanario for a flat discount.
+      inputElements.list.value = 100;
+      inputElements.net.value = 55;
+      inputElements.removal.value = 5;
+      inputElements.valveDiscount.value = null;
+      inputElements.lineItemCondition.value = null;
+      inputElements.overallDiscount.value = null;
+      calculateResults()
+      if (answer === '50') {
+        console.log('This test was successful');
+      } else {
+        console.log(`Something went wrong we expected 50 but got ${answer}`);
+      };
+    break;
   };
-};
+ }
