@@ -15,7 +15,7 @@ let answer; // This will be used to store the new discount value
 const resultsArr = [
   () => {
     if (typeof answer !== 'undefined') {
-      return `Inorder to remove $${inputElements.removal.value}, the discout would need to be changed to ${answer}%`;
+      return `In order to remove $${inputElements.removal.value}, the discount would need to be changed to ${answer}% from a ${(100*[1- (inputElements.net.value / inputElements.list.value)]).toFixed(3)}%`;
     } else {
       return "Answer is not defined.";
     }
@@ -113,7 +113,7 @@ function whatIsActive () {
         activeButton = button; // Store the active button
     }
   });
-  return activeButton;
+  return activeButton.textContent;
 };
 
 
@@ -148,10 +148,7 @@ function handleButtonClick(button) {
   //Call the hideToggleElement() function to hide unwanted elements
   if (button.textContent === "Remove Amount From Flat Discout" || button.textContent === "Remove Amount From Dual Discout") {
     hideToggleElement("multipalDiscoutSection");
-  } else if (button.textContent === "Removal amount as $") {
-   console.log("a removal input change has been requested")
-
-  };
+  } 
   
   // *********Code is no longer needed at this point *********************
   // // Array of element names to which you want to add the .notactive class
@@ -176,21 +173,25 @@ function handleButtonClick(button) {
 
 // Results Function
 function calculateResults() {
-  // if statement checks if all necessary fields have been inputted
-  if (!isFieldEmpty(inputElements.net) && !isFieldEmpty(inputElements.list) && !isFieldEmpty(inputElements.removal)) {
-    console.log("All necessary inputs are valid.");
-    let answerText;
+  let answerText;
 
-    // if statement that checks if the fields required for multiple discounts have been entered
-    if (!isFieldEmpty(inputElements.overallDiscount) && !isFieldEmpty(inputElements.lineItemCondition) && !isFieldEmpty(inputElements.valveDiscount)) {
-      removePriceMultipal();
-    } else { // this is assuming that we are using a flat discount
-      removePrice();
-    }
-  } else {
+  if (whatIsActive() === 'Remove Amount From Flat Discout') { // Checks if flat discout is currently active
+    //checking all nessary flat input feilds have been entered
+    if (!isFieldEmpty(inputElements.net) && !isFieldEmpty(inputElements.list) && !isFieldEmpty(inputElements.removal)) {
+        removePrice();
+        return;
+      };
+    //Checks if flat discout is currently active
+  } else if (whatIsActive() === 'Remove Amount From Dual Discout') {  // Checks if dual discout is currently active
+      // checks if the fields required for multiple discounts have been entered
+      if (!isFieldEmpty(inputElements.overallDiscount) && !isFieldEmpty(inputElements.lineItemCondition) && !isFieldEmpty(inputElements.valveDiscount)) {
+        removePriceMultipal();
+        return;
+      }  
+  } 
+    //prompts the user to enter all required feilds if all feilds are not entered
     displayResults("Please enter values in all required fields.");
-  }
-}
+};
   
 // Testing Function
 function testScenario(scenario) {
