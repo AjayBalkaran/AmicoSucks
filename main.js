@@ -43,7 +43,7 @@ function calculateDiscount(netAmount, listAmount) {
 }
 
 // Function to Calculate Discount from static discount after Removing a Set Price
-function removePrice() {
+function removePriceFlat() {
   const list = parseFloat(inputElements.list.value);
   const net = parseFloat(inputElements.net.value);
   const removal = parseFloat(inputElements.removal.value);
@@ -178,7 +178,7 @@ function calculateResults() {
   if (whatIsActive() === 'Remove Amount From Flat Discout') { // Checks if flat discout is currently active
     //checking all nessary flat input feilds have been entered
     if (!isFieldEmpty(inputElements.net) && !isFieldEmpty(inputElements.list) && !isFieldEmpty(inputElements.removal)) {
-        removePrice();
+        removePriceFlat();
         return;
       };
     //Checks if flat discout is currently active
