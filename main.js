@@ -9,7 +9,9 @@ const inputElements = {
 };
 
 const resultElement = document.getElementById('result');
+
 let answer; // This will be used to store the new discount value
+let removalInputTruValue; // This will be the actual number value of the removal input regardless of unit input.
 
 // Arrays
 const resultsArr = [
@@ -63,10 +65,12 @@ function removePriceFlat() {
 function removePriceMultipal() {
   const list = parseFloat(inputElements.list.value);
   const net = parseFloat(inputElements.net.value);
-  const removal = parseFloat(inputElements.removal.value);
+  const removal = removalInputTruValue;
   const overallDiscount = parseFloat(inputElements.overallDiscount.value) / 100;
   const valveDiscount = parseFloat(inputElements.valveDiscount.value) / 100;
   const lineItemCondition = parseFloat(inputElements.lineItemCondition.value);
+
+  console.log(`this is a test to see what the removal amout is when multipal discounts are called: ${removal}`)
 
   if (isNaN(list) || isNaN(net) || isNaN(removal) || isNaN(overallDiscount) || isNaN(valveDiscount) || isNaN(lineItemCondition)) {
     displayResults("Please enter valid numbers in all required fields.");
@@ -76,6 +80,7 @@ function removePriceMultipal() {
   const newNet = net - (lineItemCondition / valveDiscount) * (1 - valveDiscount);
   const newList = newNet / (1 - overallDiscount);
   const desiredPrice = newNet - removal;
+  console.log(`this is the new desired price: ${desiredPrice}`)
 
   answer = parseFloat(100 - calculateDiscount(desiredPrice, newList)).toFixed(3);
   displayResults(resultsArr[1]());
@@ -116,6 +121,10 @@ function whatIsActive () {
   return activeButton.textContent;
 };
 
+function whatisRemovalInput() {
+
+}
+
 
 // Function that hides or unhides elements by ID
 function hideToggleElement(idName) {
@@ -133,10 +142,10 @@ function hideToggleElement(idName) {
 
 
 //function that sets the active state to the clicked button.
-function handleButtonClick(button) {
+function handleOptionBarButtonClick(button) {
   // Get all the buttons within the option-bar section
   const optionButtons = document.querySelectorAll('.option-bar .tab-button');
-
+  
   // Remove the 'active' class from all buttons
   optionButtons.forEach(btn => {
       btn.classList.remove('active');
@@ -149,25 +158,22 @@ function handleButtonClick(button) {
   if (button.textContent === "Remove Amount From Flat Discout" || button.textContent === "Remove Amount From Dual Discout") {
     hideToggleElement("multipalDiscoutSection");
   } 
-  
-  // *********Code is no longer needed at this point *********************
-  // // Array of element names to which you want to add the .notactive class
-  // const elementsToAddClass = ['overallDiscount', 'valveDiscount', 'lineItemCondition'];
+}
 
-  // if (button.textContent === "Remove Amount From Flat Discout"){
-  //   console.log("Flat Discount is active");
-    
-  //   // Loop through the elementsToAddClass array and add the .notactive class to the corresponding input elements
-  //   for (const elementName of elementsToAddClass) {
-  //     const inputElement = inputElements[elementName];
-  //     if (inputElement) {
-  //       inputElement.classList.add('hide');
-  //     }
-  //   }
-  // } else if (button.textContent === "Remove Amount From Dual Discout"){
-  //   console.log('Dual diacount is active');
-  // }
-  //********************************************************************
+// function that changes the unit type of the removalInput
+function handleRemovalInputButtonClick(button) {
+  let removalInputUnit = null;
+  // check if the removal unit has been switched to percentage
+  if (button.textContent === "$") { 
+    removalInputUnit = 'percentage'; // Sets the removal unit to percentage
+    button.textContent = '%'; //changes the button text to reflect the expected input
+    removalInputTruValue = (inputElements.removal.value/100)*inputElements.net.value
+  } else {
+    removalInputUnit = 'doller';
+    button.textContent = '$';
+    removalInputTruValue = inputElements.removal.value
+  }
+  console.log(`Removal Input Unit: ${removalInputUnit} and the true value is ${removalInputTruValue}`);
 }
 
 
@@ -193,7 +199,9 @@ function calculateResults() {
     displayResults("Please enter values in all required fields.");
 };
   
-// Testing Function
+
+
+//**************/ Testing Function*******************
 function testScenario(scenario) {
   //defining a variable for switch statment
   let test = scenario
@@ -215,7 +223,7 @@ function testScenario(scenario) {
       inputElements.valveDiscount.value = 55;
       inputElements.lineItemCondition.value = 570.35;
       inputElements.overallDiscount.value = 60;
-      inputElements.removal.value = 155.03;
+      inputElements.removal.value = 155.025;
       calculateResults()
       if (answer === '65.723') {
         console.log('This test was successful');
@@ -237,6 +245,6 @@ function testScenario(scenario) {
       } else {
         console.log(`Something went wrong we expected 50 but got ${answer}`);
       };
-    break;
+      break;
   };
  }
