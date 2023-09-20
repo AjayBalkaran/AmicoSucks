@@ -120,3 +120,9 @@ input[type="number"]:focus {
   background-color: var(--light-blue); /* Dark Blue when focused */
   outline: none; /* Remove default focus outline */
 }
+
+
+/* This is used to remove all unneeded elements from view */
+.hide {
+  display: none;
+}
