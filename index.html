@@ -13,8 +13,8 @@
 
       <main>
           <section class="option-bar">
-              <button class="tab-button active" onclick="handleButtonClick(this)">Remove Amount From Flat Discout</button>
-              <button class="tab-button" onclick="handleButtonClick(this)">Remove Amount From Dual Discout</button>
+              <button class="tab-button active" onclick="handleOptionBarButtonClick(this)">Remove Amount From Flat Discout</button>
+              <button class="tab-button" onclick="handleOptionBarButtonClick(this)">Remove Amount From Dual Discout</button>
           </section>
 
           <section class="inputs">
@@ -27,7 +27,7 @@
                 <input type="number" id="netInput">
               
                 <label for="removalInput">Price to remove:</label>
-                <button class="removalInputButton" onclick="handleButtonClick(this)"> $</button>
+                <button class="removalInputButton" onclick="handleRemovalInputButtonClick(this)"> $</button>
                 <input type="number" id="removalInput">
               </section>
               
@@ -46,7 +46,7 @@
           <section class="calculation">
               <h2>Calculation Section</h2>
               <button id="calculateButton" onclick="calculateResults()">Calculate</button>
-              <p id="result">Results will be displayed here.</p>
+              <p id="result"></p>
           </section>
           <!-- Linked Javascript file -->
           <script src="main.js"></script>
