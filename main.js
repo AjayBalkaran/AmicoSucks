@@ -12,6 +12,7 @@ const resultElement = document.getElementById('result');
 
 let answer; // This will be used to store the new discount value
 let removalInputTruValue; // This will be the actual number value of the removal input regardless of unit input.
+let removalInputUnit = 'dollers'
 
 // Arrays
 const resultsArr = [
@@ -24,7 +25,7 @@ const resultsArr = [
   },
   () => {
     if (typeof answer !== 'undefined') {
-      return `Inorder to remove $${removalInputTruValue}, the discout would need to be changed to ${answer} / ${inputElements.valveDiscount.value}%`;
+      return `Inorder to remove $${removalInputTruValue}, the discout would need to be changed to [ ${answer} / ${inputElements.valveDiscount.value}% ] from [ ${inputElements.overallDiscount.value} / ${inputElements.valveDiscount.value}% ]`;
     } else {
       return "Answer is not defined.";
     }
@@ -36,6 +37,17 @@ const resultsArr = [
 function displayResults(text) {
   resultElement.textContent = text;
   console.log(`entered displayResults function, will disply the following ${text}`);
+}
+
+//Function to check what the removal input unit is sent the true removal value in dollers
+function getTrueRemovalValue() {
+  console.log('entered getTrueRemovalValue function');
+  if (removalInputUnit === 'dollers') {
+    removalInputTruValue = parseFloat(inputElements.removal.value);
+  } else {
+    removalInputTruValue = parseFloat((inputElements.removal.value/100)*inputElements.net.value) //(inputElements.removal.value/100)*inputElements.net.value
+  }
+  console.log(`The True removal Value is $${removalInputTruValue}`);
 }
 
 // Function to Calculate Discount
@@ -51,7 +63,7 @@ function removePriceFlat() {
   console.log('entered removalPriceFlat function.');
   const list = parseFloat(inputElements.list.value);
   const net = parseFloat(inputElements.net.value);
-  const removal = parseFloat(removalInputTruValue);
+  const removal = removalInputTruValue;
   console.log(`attempting to remove $${removal}`);
   if (isNaN(list) || isNaN(net) || isNaN(removal)) {
     displayResults("Please enter valid numbers in all required fields.");
@@ -69,6 +81,7 @@ function removePriceFlat() {
 
 // Function to Calculate Discount from multiple discounts after Removing a Set Price
 function removePriceMultipal() {
+  console.log('entered removePriceMultipal function.');
   const list = parseFloat(inputElements.list.value);
   const net = parseFloat(inputElements.net.value);
   const removal = removalInputTruValue;
@@ -86,9 +99,9 @@ function removePriceMultipal() {
   const newNet = net - (lineItemCondition / valveDiscount) * (1 - valveDiscount);
   const newList = newNet / (1 - overallDiscount);
   const desiredPrice = newNet - removal;
-  console.log(`this is the new desired price: ${desiredPrice}`)
+  console.log(`The new net value: ${newNet}, new list value: ${newList} and new desired price: ${desiredPrice}`)
 
-  answer = parseFloat(100 - calculateDiscount(desiredPrice, newList)).toFixed(3);
+  answer = calculateDiscount(desiredPrice, newList);
   displayResults(resultsArr[1]());
 }
 
@@ -168,39 +181,37 @@ function handleOptionBarButtonClick(button) {
 
 // function that changes the unit type of the removalInput
 function handleRemovalInputButtonClick(button) {
-  let removalInputUnit = null;
-
   console.log('entered handleRemovalInputButtonClick');
   // check if the removal unit has been switched to percentage
   if (button.textContent === "$") { 
     removalInputUnit = 'percentage'; // Sets the removal unit to percentage
     button.textContent = '%'; //changes the button text to reflect the expected input
-    removalInputTruValue = (inputElements.removal.value/100)*inputElements.net.value
   } else {
     removalInputUnit = 'dollers';
     button.textContent = '$';
-    removalInputTruValue = inputElements.removal.value.toFixed(3)
   }
-  console.log(`Removal Input Unit is in ${removalInputUnit} and the true value is ${removalInputTruValue}`);
+
+  console.log(`Removal Input Unit is in ${removalInputUnit}`);
 }
 
 
 // Results Function
 function calculateResults() {
+  let answerText;
   console.log("Started the calculateResults function")
   
-  let answerText;
+  getTrueRemovalValue(); // getting the true value of the removal value. 
 
   if (whatIsActive() === 'Remove Amount From Flat Discout') { // Checks if flat discout is currently active
     //checking all nessary flat input feilds have been entered
-    if (!isFieldEmpty(inputElements.net) && !isFieldEmpty(inputElements.list) && !isFieldEmpty(inputElements.removal)) {
+    if (!isFieldEmpty(inputElements.list) && !isFieldEmpty(inputElements.net) && !isFieldEmpty(inputElements.removal)) {
         removePriceFlat();
         return;
       };
     //Checks if flat discout is currently active
   } else if (whatIsActive() === 'Remove Amount From Dual Discout') {  // Checks if dual discout is currently active
       // checks if the fields required for multiple discounts have been entered
-      if (!isFieldEmpty(inputElements.overallDiscount) && !isFieldEmpty(inputElements.lineItemCondition) && !isFieldEmpty(inputElements.valveDiscount)) {
+      if (!isFieldEmpty(inputElements.valveDiscount) && !isFieldEmpty(inputElements.lineItemCondition) && !isFieldEmpty(inputElements.overallDiscount)) {
         removePriceMultipal();
         return;
       }  
@@ -216,33 +227,30 @@ function testScenario(scenario) {
   // Defining a variable for the switch statement
   let test = scenario;
 
+  function clickOnButton(buttonId) {
+    let clickButton = document.getElementById(buttonId)
+    
+    if (clickButton) { // checking if button exist.
+      clickButton.click();
+    }
+    else {
+      console.log('the button does not exist pleaase check button Id is "dualDiscoutButton"');
+    }
+  };
+
   // Switch statement to perform different tests based on the scenario given
   switch (test) {
     case "isListValue":
       // Testing what the list value is.
       console.log(`The current list Value is $${inputElements.list.value}`);
       break;
-    case "isNetValue":
+    
+      case "isNetValue":
       // Testing what the Net value is.
       console.log(`The current Net Value is $${inputElements.Net.value}`);
       break;
-    case "isMultipleDiscoutResult":
-      // Testing if the expected results vs actual results are the same given predetermined scenario for multiple discounts.
-      inputElements.list.value = 3746;
-      inputElements.net.value = 1550.25;
-      inputElements.valveDiscount.value = 55;
-      inputElements.lineItemCondition.value = 570.35;
-      inputElements.overallDiscount.value = 60;
-      inputElements.removal.value = 155.025;
-      calculateResults();
-      if (answer === '65.723') {
-        console.log('This test was successful');
-      } else {
-        console.log('Something went wrong');
-      }
-      break;
-
-    case "isFlatDiscountResult":
+    
+      case "isFlatDiscountResult":
       // Testing if the expected results vs actual results are the same given predetermined scenario for a flat discount.
       inputElements.list.value = 100;
       inputElements.net.value = 55;
@@ -250,11 +258,35 @@ function testScenario(scenario) {
       inputElements.valveDiscount.value = null;
       inputElements.lineItemCondition.value = null;
       inputElements.overallDiscount.value = null;
+  
+      clickOnButton('flatDiscoutButton'); // click on the flat discount button to calculate flat discounts
+
       calculateResults();
-      if (answer === '50') {
+      if (answer === '50.000') {
         console.log('This test was successful');
       } else {
-        console.log(`Something went wrong we expected 50 but got ${answer}`);
+        console.log(`The test was unsuccessfull; we expected 50 but got ${answer}`);
+      }
+      break;
+
+      case "isMultipleDiscoutResult":
+      // Testing if the expected results vs actual results are the same given predetermined scenario for multiple discounts.
+      inputElements.list.value = 3746;
+      inputElements.net.value = 1550.25;
+      inputElements.valveDiscount.value = 55;
+      inputElements.lineItemCondition.value = 570.35;
+      inputElements.overallDiscount.value = 60;
+      inputElements.removal.value = 155.025;
+
+      clickOnButton('dualDiscoutButton');// click on the mulitipal discount button to calculate dual discounts
+
+
+      calculateResults();
+      //check if the answer is the expected result
+      if (answer === '65.723') {
+        console.log('This test was successful');
+      } else {
+        console.log(`The Test was unsuccessful; expected answer was 65.723 but returned ${answer}`);
       }
       break;
 
@@ -265,16 +297,15 @@ function testScenario(scenario) {
 
       console.log('started to test if percentage unit is valid');
 
-      togglePercentageButton = document.getElementById("removalInputButton");
+      clickOnButton ("removalInputButton");
 
-      if (togglePercentageButton) {
+      if (clickOnButton) {
         console.log("Button exists");
-
         // Check the current unit
-        if (togglePercentageButton.textContent === "$") {
+        if (clickOnButton.textContent === "$") {
           console.log('The unit being expected is Dollars');
           // Click the button to toggle the unit
-          togglePercentageButton.click();
+          clickOnButton.click();
         } else {
           console.log('The unit being expected is Percentage');
         }
