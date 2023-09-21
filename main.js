@@ -17,14 +17,14 @@ let removalInputTruValue; // This will be the actual number value of the removal
 const resultsArr = [
   () => {
     if (typeof answer !== 'undefined') {
-      return `In order to remove $${inputElements.removal.value}, the discount would need to be changed to ${answer}% from a ${(100*[1- (inputElements.net.value / inputElements.list.value)]).toFixed(3)}%`;
+      return `In order to remove $${removalInputTruValue}, the discount would need to be changed to ${answer}% from a ${(100*[1- (inputElements.net.value / inputElements.list.value)]).toFixed(3)}%`;
     } else {
       return "Answer is not defined.";
     }
   },
   () => {
     if (typeof answer !== 'undefined') {
-      return `Inorder to remove $${inputElements.removal.value}, the discout would need to be changed to ${answer} / ${inputElements.valveDiscount.value}%`;
+      return `Inorder to remove $${removalInputTruValue}, the discout would need to be changed to ${answer} / ${inputElements.valveDiscount.value}%`;
     } else {
       return "Answer is not defined.";
     }
@@ -35,21 +35,24 @@ const resultsArr = [
 // Function to Display Results
 function displayResults(text) {
   resultElement.textContent = text;
-  console.log('Results are being displayed');
+  console.log(`entered displayResults function, will disply the following ${text}`);
 }
 
 // Function to Calculate Discount
 function calculateDiscount(netAmount, listAmount) {
-  const discount = 100 * (netAmount / listAmount);
+  console.log(`entered the calculateDiscount function and the net amount being used is ${netAmount} and the list amount being used is ${listAmount}`);
+  const discount = ((1 - (netAmount / listAmount))* 100).toFixed(3);
+  console.log(`the discout being returned is  ${discount}`);
   return discount;
 }
 
 // Function to Calculate Discount from static discount after Removing a Set Price
 function removePriceFlat() {
+  console.log('entered removalPriceFlat function.');
   const list = parseFloat(inputElements.list.value);
   const net = parseFloat(inputElements.net.value);
-  const removal = parseFloat(inputElements.removal.value);
-
+  const removal = parseFloat(removalInputTruValue);
+  console.log(`attempting to remove $${removal}`);
   if (isNaN(list) || isNaN(net) || isNaN(removal)) {
     displayResults("Please enter valid numbers in all required fields.");
     return;
@@ -57,6 +60,9 @@ function removePriceFlat() {
 
   const newNet = net - removal;
 
+  console.log(`the desired price (newNet value) is: ${newNet} `);
+
+  console.log("attempting to now calculate the discount using the new net and the list price");
   answer = calculateDiscount(newNet, list);
   displayResults(resultsArr[0]());
 }
@@ -163,22 +169,26 @@ function handleOptionBarButtonClick(button) {
 // function that changes the unit type of the removalInput
 function handleRemovalInputButtonClick(button) {
   let removalInputUnit = null;
+
+  console.log('entered handleRemovalInputButtonClick');
   // check if the removal unit has been switched to percentage
   if (button.textContent === "$") { 
     removalInputUnit = 'percentage'; // Sets the removal unit to percentage
     button.textContent = '%'; //changes the button text to reflect the expected input
     removalInputTruValue = (inputElements.removal.value/100)*inputElements.net.value
   } else {
-    removalInputUnit = 'doller';
+    removalInputUnit = 'dollers';
     button.textContent = '$';
-    removalInputTruValue = inputElements.removal.value
+    removalInputTruValue = inputElements.removal.value.toFixed(3)
   }
-  console.log(`Removal Input Unit: ${removalInputUnit} and the true value is ${removalInputTruValue}`);
+  console.log(`Removal Input Unit is in ${removalInputUnit} and the true value is ${removalInputTruValue}`);
 }
 
 
 // Results Function
 function calculateResults() {
+  console.log("Started the calculateResults function")
+  
   let answerText;
 
   if (whatIsActive() === 'Remove Amount From Flat Discout') { // Checks if flat discout is currently active
@@ -203,48 +213,80 @@ function calculateResults() {
 
 //**************/ Testing Function*******************
 function testScenario(scenario) {
-  //defining a variable for switch statment
-  let test = scenario
+  // Defining a variable for the switch statement
+  let test = scenario;
 
-  //switch statment to perform diffrent test based on the scenario given
+  // Switch statement to perform different tests based on the scenario given
   switch (test) {
-    case "isListValue" :
+    case "isListValue":
       // Testing what the list value is.
-      console.log(`The current list Value is $${inputElements.list.value}`); 
+      console.log(`The current list Value is $${inputElements.list.value}`);
       break;
-    case "isNetValue" :
+    case "isNetValue":
       // Testing what the Net value is.
-      console.log(`The current Net Value is $${inputElements.Net.value}`); 
+      console.log(`The current Net Value is $${inputElements.Net.value}`);
       break;
     case "isMultipleDiscoutResult":
-      //Testing if the expected results vs actual results are the same given predetermined sanario for multipal discounts.
+      // Testing if the expected results vs actual results are the same given predetermined scenario for multiple discounts.
       inputElements.list.value = 3746;
       inputElements.net.value = 1550.25;
       inputElements.valveDiscount.value = 55;
       inputElements.lineItemCondition.value = 570.35;
       inputElements.overallDiscount.value = 60;
       inputElements.removal.value = 155.025;
-      calculateResults()
+      calculateResults();
       if (answer === '65.723') {
         console.log('This test was successful');
       } else {
         console.log('Something went wrong');
-      };  
+      }
       break;
+
     case "isFlatDiscountResult":
-      //Testing if the expected results vs actual results are the same given predetermined sanario for a flat discount.
+      // Testing if the expected results vs actual results are the same given predetermined scenario for a flat discount.
       inputElements.list.value = 100;
       inputElements.net.value = 55;
       inputElements.removal.value = 5;
       inputElements.valveDiscount.value = null;
       inputElements.lineItemCondition.value = null;
       inputElements.overallDiscount.value = null;
-      calculateResults()
+      calculateResults();
       if (answer === '50') {
         console.log('This test was successful');
       } else {
         console.log(`Something went wrong we expected 50 but got ${answer}`);
-      };
+      }
       break;
-  };
- }
+
+    case "isPercentageUnit":
+      inputElements.list.value = 3746;
+      inputElements.net.value = 1550.25;
+      inputElements.removal.value = 10; // 155.025;
+
+      console.log('started to test if percentage unit is valid');
+
+      togglePercentageButton = document.getElementById("removalInputButton");
+
+      if (togglePercentageButton) {
+        console.log("Button exists");
+
+        // Check the current unit
+        if (togglePercentageButton.textContent === "$") {
+          console.log('The unit being expected is Dollars');
+          // Click the button to toggle the unit
+          togglePercentageButton.click();
+        } else {
+          console.log('The unit being expected is Percentage');
+        }
+      } else {
+        console.log('Button does not exist. Please check your code.');
+      };
+
+      // Calculate the results
+      calculateResults();
+
+      // Console log the value of the removal input after the unit change
+      console.log(`Removal Input True Value: ${inputElements.removal.value}`);
+      break;
+  }
+}
