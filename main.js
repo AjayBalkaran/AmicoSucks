@@ -273,10 +273,10 @@ function testScenario(scenario) {
       // Testing if the expected results vs actual results are the same given predetermined scenario for multiple discounts.
       inputElements.list.value = 3746;
       inputElements.net.value = 1550.25;
+      inputElements.removal.value = 155.025;
       inputElements.valveDiscount.value = 55;
       inputElements.lineItemCondition.value = 570.35;
       inputElements.overallDiscount.value = 60;
-      inputElements.removal.value = 155.025;
 
       clickOnButton('dualDiscoutButton');// click on the mulitipal discount button to calculate dual discounts
 
@@ -291,13 +291,14 @@ function testScenario(scenario) {
       break;
 
     case "isPercentageUnit":
+      console.log('checking flat discout when removal unit is percentage');
       inputElements.list.value = 3746;
       inputElements.net.value = 1550.25;
       inputElements.removal.value = 10; // 155.025;
 
-      console.log('started to test if percentage unit is valid');
-
-      clickOnButton ("removalInputButton");
+      // applying all button clicks
+      clickOnButton('flatDiscoutButton');
+      clickOnButton ('removalInputButton');
 
       if (clickOnButton) {
         console.log("Button exists");
@@ -317,7 +318,27 @@ function testScenario(scenario) {
       calculateResults();
 
       // Console log the value of the removal input after the unit change
-      console.log(`Removal Input True Value: ${inputElements.removal.value}`);
+      if (answer === '62.754') {
+        alert('This test for flat discounts  was successful');
+      } else {
+        alert(`The Test was unsuccessful; expected answer was 65.723 but returned ${answer}`);
+      }
+      //Changing the inputs to check multipal discounts
+      console.log('checking multipal discout when removal unit is percentage');
+      clickOnButton('dualDiscoutButton');
+      inputElements.valveDiscount.value = 55;
+      inputElements.lineItemCondition.value = 570.35;
+      inputElements.overallDiscount.value = 60;
+
+      calculateResults();
+
+      if (answer === '65.723') {
+        alert('This test for multipal discounts was successful');
+      } else {
+        alert(`The Test was unsuccessful; expected answer was 65.723 but returned ${answer}`);
+      }
+      // Calculate the results
+
       break;
   }
 }
