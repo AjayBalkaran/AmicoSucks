@@ -12,6 +12,7 @@
       </header>
 
       <main>
+        <div class="wrapper">
           <section class="option-bar">
               <button id="flatDiscoutButton" class="tab-button active" onclick="handleOptionBarButtonClick(this)">Remove Amount From Flat Discout</button>
               <button id="dualDiscoutButton" class="tab-button" onclick="handleOptionBarButtonClick(this)">Remove Amount From Dual Discout</button>
@@ -20,27 +21,37 @@
           <section class="inputs">
               <h2>Input Section</h2>
               
-              <section id="criticalInputs">
-                <label for="listInput">List:</label>
-                <input type="number" id="listInput">
-                <label for="netInput">NET:</label>
-                <input type="number" id="netInput">
-              
-                <label for="removalInput">Price to remove:</label>
-                <button id="removalInputButton" onclick="handleRemovalInputButtonClick(this)">$</button>
-                <input type="number" id="removalInput">
+              <section id="criticalInputs" class="threeSectionGrid">
+                <div>
+                  <label for="listInput">List:</label>
+                  <input type="number" id="listInput">
+                </div>
+                <div>
+                  <label for="netInput">NET:</label>
+                  <input type="number" id="netInput">
+                </div>
+                <div>
+                  <label for="removalInput">Price to remove:</label>
+                  <button id="removalInputButton" onclick="handleRemovalInputButtonClick(this)">$</button>
+                  <input type="number" id="removalInput">
+                </div>
               </section>
-              
-              <br>
-              
+
               <section id="multipalDiscoutSection" class="hide">
-                <label for="valveDiscount">Valve Discount:</label>
-                <input type="number" id="valveDiscount">
-                <label for="lineItemCondition">Line Item Condition:</label>
-                <input type="number" id="lineItemCondition">
-                <label for="overallDiscount">Overall Discount:</label>
-                <input type="number" id="overallDiscount">
+                <div>
+                  <label for="valveDiscount">Valve Discount:</label>
+                  <input type="number" id="valveDiscount">
+                </div>
+                <div>
+                  <label for="lineItemCondition">Line Item Condition:</label>
+                  <input type="number" id="lineItemCondition">
+                </div>
+                <div>
+                  <label for="overallDiscount">Overall Discount:</label>
+                  <input type="number" id="overallDiscount">
+                </div>
               </section>
+              
             </section>
 
           <section class="calculation">
@@ -50,6 +61,7 @@
           </section>
           <!-- Linked Javascript file -->
           <script src="main.js"></script>
+        </div>
       </main>
   </body>
 </html>
