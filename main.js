@@ -150,8 +150,7 @@ function hideToggleElement(idName) {
   let elementToHideToggle = document.getElementById(idName);
   if (elementToHideToggle) { // Check if the element exists
     if (elementToHideToggle.classList.contains("hide")) { // checks if element is already hidden
-      elementToHideToggle.classList.remove("hide"); 
-      elementToHideToggle.classList.add("threeSectionGrid") 
+      elementToHideToggle.classList.remove("hide");  
     } else { // if element is not hidden then hide
       elementToHideToggle.classList.add("hide");
     };
