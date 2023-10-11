@@ -1,4 +1,5 @@
 :root {
+  /* set the color palet for the site */
   --primary-color: #333; /* Dark Gray */
   --secondary-color: #666; /* Slightly Darker Gray */
   --accent-color: #0077b6; /* Teal Blue */
@@ -75,9 +76,13 @@ footer {
 
 /* Style for the option bar container */
 .option-bar {
-  display: flex;
-  background-color: var(--primary-color); /* Dark Gray for option bar background */
-  padding: 10px;
+  grid-area: menu;
+  display: grid;
+  /* background-color: var(--primary-color);  */
+  grid-template-columns: 1fr 1fr ;
+  /* justify-content: center; */
+  gap: 20em;
+  padding-left: 1em;
 }
 
 /* Style for the tab buttons */
@@ -109,10 +114,11 @@ footer {
 input[type="number"] {
   background-color: var(--accent-color); /* Light Blue for input background */
   color: var(--text-color);
-  padding: 5px;
+  padding: .5em ;
   border: none;
   border-radius: 5px;
-  margin: 5px 0;
+  margin: .5em.5em 0 ;
+  min-width: 50%;
 }
 
 /* Update the color for focused input elements (when clicked) */
@@ -121,6 +127,75 @@ input[type="number"]:focus {
   outline: none; /* Remove default focus outline */
 }
 
+
+
+
+/* ========Grid Items========== */
+.page-title{
+  grid-area: header;
+}
+
+.inputs {
+  grid-area: main;
+}
+.calculation {
+  grid-area: footer;
+  display: flex;
+  /* justify-content: center; Center the content horizontally */
+  flex-direction: column; /* Stack the elements vertically */
+  
+}
+
+#calculateButton {
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  padding: 1em 1px; /* Adjust the padding to your liking */
+  border: none; /* Remove the button border */
+  border-radius: 5px; /* Add rounded corners */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  font-size: 16px; /* Adjust the font size */
+  max-width: 50%;
+  margin: 0 40% 0 40%;
+}
+
+/* Hover effect */
+#calculateButton:hover {
+  background-color: #2980b9; /* Change this to your desired hover color */
+  content: 50%;
+}
+
+
+#result {
+  background-color: var(--dark-blue); 
+  padding: 1.5em; /* Add padding to separate it from the background */
+  border: 1px solid #ccc; /* Add a border around the result box */
+  border-radius: 5px; /* Add rounded corners to the result box */
+  margin: 2em 10% 0 10%;
+  min-width: 50em;
+  min-height: 5em;
+}
+
+.threeSectionGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Create three equal-width columns */
+  gap: 1em; /* Adjust the gap between items as needed */
+  text-align: right;
+  margin: 2% 10% 5% 0;
+}
+
+
+/* Gid layout */
+
+.wrapper {
+  display: grid;
+  grid-template-areas: 
+  'header header header'
+  'menu menu menu'
+  'main main main'
+  'footer footer footer';
+  gap: 2em;
+  padding: 1em;
+}
 
 /* This is used to remove all unneeded elements from view */
 .hide {
